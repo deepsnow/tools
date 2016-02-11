@@ -50,7 +50,7 @@ class EmailSender:
         self.msg.attach( attachment )
 
     def _ReadTextFileAsMime( self, file_path ):
-        attach_handle = open( file_path, "r" )
+        attach_handle = open( file_path, 'r' )
         return email.mime.text.MIMEText( attach_handle.read() )
 
     # Always set the body before adding any attachements.
@@ -62,7 +62,7 @@ class EmailSender:
     def AddRecipients( self, recip_list ):
         self.to_addrs = self.to_addrs + recip_list
 
-    def SendMessage( self ):
+    def SendMessages( self ):
         try:
             self.msg['To'] = ", ".join( self.to_addrs )
             server = smtplib.SMTP( server_name, server_port )
@@ -124,3 +124,4 @@ class EmailSenderTest(unittest.TestCase):
                 self.es.SetBody()
         mockMimeText.assert_called_once_with(text)
         file_handle.read.assert_called_once()
+        mockOpen.assert_called_once_with('body.txt', 'r')
